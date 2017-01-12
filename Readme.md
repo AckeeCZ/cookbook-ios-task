@@ -2,12 +2,12 @@
 
 Welcome! Wanna join [Ackee][1]? Or you just dont know what to do on lazy sunday afternoon ?
 
-Here is an Task for you ! Create iOS version of delicious ackee recipes. We have everything you need to get started 
+Here is an Task for you ! Create iOS version of delicious ackee recipes. We have everything you need to get started
 - API (and running server)
 - Designs
 - Simple iOS skeleton with some prepared code
 
-it should take you around 2-4 hours to complete 
+it should take you around 2-4 hours to complete
 
 ## API & Server
 Documentation for the api can be found on [apiary][2]
@@ -16,7 +16,10 @@ live server can be visited on address [https://cookbook.ack.ee][3]
 ## Designs
 App contains those 3 screens. XCode project already has all neccessary assets but you can open original [Sketch][4] file from respository if you need to.
 
-![][image-1] ![][image-2] ![][image-3]
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/01_list.png" width="375">
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/02_detail.png" width="375">
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/03_add.png" width="375">
+
 
 ## App
 We have created project automatically for you, which includes XcodeWorkspace with required Pods. We also included simple Reactive wrapper over API and example (in `MasterViewController.swift`)
@@ -36,7 +39,3 @@ We have created project automatically for you, which includes XcodeWorkspace wit
 [3]:	https://cookbook.ack.ee
 [4]:	http://sketchapp.com
 [5]:	https://github.com/AckeeCZ/ios-cookbook
-
-[image-1]:	https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/01_list.png
-[image-2]:	https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/02_detail.png
-[image-3]:	https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/03_add.png
