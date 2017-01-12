@@ -16,9 +16,9 @@ live server can be visited on address [https://cookbook.ack.ee][3]
 ## Designs
 App contains those 3 screens. XCode project already has all neccessary assets but you can open original [Sketch][4] file from respository if you need to.
 
-<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/01_list.png" width="200">
-<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/02_detail.png" width="200">
-<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/03_add.png" width="200">
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/01_list.png" width="200">&nbsp;&nbsp;&nbsp;
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/02_detail.png" width="200">&nbsp;&nbsp;&nbsp;
+<img src="https://raw.githubusercontent.com/AckeeCZ/cookbook-ios-task/master/PNG/03_add.png" width="200">&nbsp;
 
 
 ## App
