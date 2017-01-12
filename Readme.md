@@ -1,6 +1,6 @@
 # Ackee Cookbook iOS Version
 
-Welcome! Wanna join [Ackee][1]? Or you just dont know what to do on lazy sunday afternoon ?
+Welcome! Wanna join [Ackee][1] ? Or you just dont know what to do on lazy sunday afternoon ?
 
 Here is an Task for you ! Create iOS version of delicious ackee recipes. We have everything you need to get started
 - API (and running server)
