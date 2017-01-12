@@ -13,15 +13,15 @@ it should take you around 2-4 hours to complete
 Documentation for the api can be found on [apiary][2]
 live server can be visited on address [https://cookbook.ack.ee][3]
 
-## Designs 
+## Designs
 App contains those 3 screens. XCode project already has all neccessary assets but you can open original [Sketch][4] file from respository if you need to.
 
 ![][image-1] ![][image-2] ![][image-3]
 
-## App 
+## App
 We have created project automatically for you, which includes XcodeWorkspace with required Pods. We also included simple Reactive wrapper over API and example (in `MasterViewController.swift`)
 
-### Tasks for you 
+### Tasks for you
 
 - Write the app :)
 - Use as much standards as we do in our [iOS Cookbook][5]
