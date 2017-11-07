@@ -57,10 +57,16 @@ class APIService {
                 else { return SignalProducer(error: networkError) }
 
                 let retry = { [unowned self] in
-                    self.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: authHandler)
+                    self.request(path,
+                                 method: method,
+                                 parameters: parameters,
+                                 encoding: encoding,
+                                 headers: headers,
+                                 authHandler: authHandler)
                 }
 
-                guard self.requestUsedCurrentAuthData(originalRequest) else { return retry() } // check that we havent refreshed token while the request was running
+                // check that we havent refreshed token while the request was running
+                guard self.requestUsedCurrentAuthData(originalRequest) else { return retry() }
 
                 let refreshSuccessful = SignalProducer(authHandler.events)
                     .filter { $0.isTerminating } // dont care about values
@@ -75,7 +81,9 @@ class APIService {
 
                 return refreshSuccessful
                     .on(started: {
-                        DispatchQueue.main.async { // fire the authHandler in next runloop to prevent recursive events in case that authHandler completes synchronously
+                        // fire the authHandler in next runloop to prevent recursive events
+                        // in case that authHandler completes synchronously
+                        DispatchQueue.main.async {
                             authHandler.apply(networkError).start() // sideeffect
                         }
                 })

@@ -43,9 +43,17 @@ class Network: Networking {
                  headers: [String: String]?,
                  useDisposables: Bool) -> SignalProducer<Any?, NetworkError> {
         return SignalProducer { sink, disposable in
-            let request = self.alamofireManager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let request = self.alamofireManager.request(url,
+                                                        method: method,
+                                                        parameters: parameters,
+                                                        encoding: encoding,
+                                                        headers: headers)
                 .validate()
-                .response { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
+                .response { defaultResponse in
+                    let request = defaultResponse.request
+                    let response = defaultResponse.response
+                    let data = defaultResponse.data
+                    let error = defaultResponse.error
 
                     switch (data, error) {
                     case (_, .some(let e)):
@@ -56,7 +64,10 @@ class Network: Networking {
                             sink.send(value: json)
                             sink.sendCompleted()
                         } catch {
-                            sink.send(error: NetworkError(error: (error as NSError), request: request, response: response))
+                            let networkError = NetworkError(error: (error as NSError),
+                                                            request: request,
+                                                            response: response)
+                            sink.send(error: networkError)
                             return
                         }
                     default: assertionFailure()
