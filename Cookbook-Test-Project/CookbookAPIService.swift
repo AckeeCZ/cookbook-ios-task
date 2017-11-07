@@ -10,26 +10,22 @@ import Foundation
 import ReactiveSwift
 
 protocol CookbookAPIServicing {
-    func getRecipes() -> SignalProducer<Any?,RequestError>
+    func getRecipes() -> SignalProducer<Any?, RequestError>
 }
-
 
 /**
  Concrete class for creating api calls to our server
  */
-class CookbookAPIService : APIService, CookbookAPIServicing {
-    
+class CookbookAPIService: APIService, CookbookAPIServicing {
     override func resourceURL(_ path: String) -> URL {
         let URL = Foundation.URL(string: "https://cookbook.ack.ee/api/v1/")!
         let relativeURL = Foundation.URL(string: path, relativeTo: URL)!
         return relativeURL
     }
-    
+
     internal func getRecipes() -> SignalProducer<Any?, RequestError> {
         return self.request("recipes")
             .mapError { .network($0) }
            // .map{ Any? -> Array Of Recipes}
     }
-
-    
 }

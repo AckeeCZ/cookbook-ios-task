@@ -39,7 +39,12 @@ class APIService {
 
     func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<Any?, NetworkError> {
         let relativeURL = resourceURL(path)
-        return self.network.request(relativeURL.absoluteString, method: method, parameters: parameters, encoding: encoding, headers: headers, useDisposables: false)
+        return self.network.request(relativeURL.absoluteString,
+                                    method: method,
+                                    parameters: parameters,
+                                    encoding: encoding,
+                                    headers: headers,
+                                    useDisposables: false)
             .flatMapError { [unowned self] networkError in
                 guard networkError.response?.statusCode == 401,
                     let authHandler = authHandler,
@@ -54,8 +59,8 @@ class APIService {
 
                 let refreshSuccessful = SignalProducer(authHandler.events)
                     .filter { $0.isTerminating } // dont care about values
-                .map { e -> Bool in
-                    switch e {
+                .map { event -> Bool in
+                    switch event {
                     case .completed: return true
                     case .failed, .interrupted: return false
                     default: assertionFailure(); return false
@@ -76,7 +81,6 @@ class APIService {
                 }
         }
     }
-    
 
     func requestUsedCurrentAuthData(_ request: URLRequest) -> Bool {
         return true
