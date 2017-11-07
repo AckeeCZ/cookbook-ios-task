@@ -24,7 +24,7 @@ class MasterViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.detailViewController = (controllers[controllers.count-1] as? UINavigationController)?.topViewController as? DetailViewController
         }
         
         //Just quick snippet for showing how to work with api service
@@ -62,11 +62,11 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
+                let object = objects[indexPath.row] as? NSDate
+                let controller = (segue.destination as? UINavigationController)?.topViewController as? DetailViewController
+                controller?.detailItem = object
+                controller?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                controller?.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
@@ -84,8 +84,8 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let object = objects[indexPath.row] as? NSDate
+        cell.textLabel!.text = object?.description
         return cell
     }
 
