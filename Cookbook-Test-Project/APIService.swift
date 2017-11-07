@@ -37,7 +37,12 @@ class APIService {
         return relativeURL
     }
 
-    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<Any?, NetworkError> {
+    func request(_ path: String,
+                 method: Alamofire.HTTPMethod = .get,
+                 parameters: [String: Any]? = nil,
+                 encoding: ParameterEncoding = URLEncoding.default,
+                 headers: [String: String] = [:],
+                 authHandler: AuthHandler? = nil) -> SignalProducer<Any?, NetworkError> {
         let relativeURL = resourceURL(path)
         return self.network.request(relativeURL.absoluteString,
                                     method: method,
@@ -50,7 +55,7 @@ class APIService {
                     let authHandler = authHandler,
                     let originalRequest = networkError.request
                 else { return SignalProducer(error: networkError) }
-                
+
                 let retry = { [unowned self] in
                     self.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: authHandler)
                 }
