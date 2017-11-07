@@ -1,28 +1,31 @@
 PODS:
   - Alamofire (4.2.0)
-  - ReactiveCocoa (5.0.0-alpha.2):
-    - ReactiveSwift (~> 1.0.0-alpha.3)
-  - ReactiveSwift (1.0.0-alpha.3):
-    - Result (~> 3.0)
+  - ReactiveCocoa (5.0.4):
+    - ReactiveSwift (~> 1.1)
+  - ReactiveSwift (1.1.5):
+    - Result (~> 3.2)
   - Reqres (2.0.0)
-  - Result (3.1.0)
+  - Result (3.2.4)
   - SnapKit (3.0.2)
+  - SwiftLint (0.23.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
-  - ReactiveCocoa (= 5.0.0-alpha.2)
-  - ReactiveSwift (= 1.0.0-alpha.3)
+  - ReactiveCocoa (~> 5)
+  - ReactiveSwift (~> 1)
   - Reqres
   - SnapKit (~> 3.0)
+  - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  ReactiveCocoa: 14a6358d1009c90c3078bc352ce84c102b78c45e
-  ReactiveSwift: d67b677f9574ba614d94022a88fcf456e77fa515
+  ReactiveCocoa: b31e754d15937811ede648fc83cd68f5de70a3d4
+  ReactiveSwift: 3fea31f8fc49f112d2dc613282c5d395c4d167bb
   Reqres: 7027a575c1539c9635ff11ecf04d49cdf30a2f0a
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
 
-PODFILE CHECKSUM: f591f29a17f1467b6c48a464f132bbbccb4c0164
+PODFILE CHECKSUM: 01e80b75a771f20269a6e4da9638e7d4d42a6421
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

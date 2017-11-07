@@ -9,11 +9,12 @@ inhibit_all_warnings!
 
 target 'Cookbook' do
 
-pod 'ReactiveCocoa', '5.0.0-alpha.2'
-pod 'ReactiveSwift', '1.0.0-alpha.3'
+pod 'ReactiveCocoa', '~> 5'
+pod 'ReactiveSwift', '~> 1'
 pod 'SnapKit', '~> 3.0'
 pod 'Alamofire', '~> 4.0'
 pod 'Reqres'
+pod 'SwiftLint'
 
 end
 
