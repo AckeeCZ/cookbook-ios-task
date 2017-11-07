@@ -10,7 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
-    var detailViewController: DetailViewController? = nil
+    var detailViewController: DetailViewController?
     var objects = [Any]()
 
     var api: CookbookAPIServicing!
@@ -26,19 +26,18 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as? UINavigationController)?.topViewController as? DetailViewController
         }
-        
+
         //Just quick snippet for showing how to work with api service
         self.api = CookbookAPIService(network: Network(), authHandler: nil)
         api.getRecipes().startWithResult { (result) in
             if case .success(let value) = result {
                 print (value ?? "")
             }
-            
+
             if case .failure(let error) = result {
                 print(error)
             }
         }
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {

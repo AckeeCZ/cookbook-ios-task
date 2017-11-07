@@ -11,14 +11,11 @@ import Alamofire
 import ReactiveSwift
 import Reqres
 
-
 struct NetworkError: Error {
     let error: NSError
     let request: URLRequest?
     let response: HTTPURLResponse?
 }
-
-
 
 protocol Networking {
     func request(_ url: String,
@@ -31,7 +28,7 @@ protocol Networking {
 
 class Network: Networking {
 
-    let alamofireManager : SessionManager
+    let alamofireManager: SessionManager
 
     init() {
         let configuration = Reqres.defaultSessionConfiguration()
@@ -48,7 +45,7 @@ class Network: Networking {
         return SignalProducer { sink, disposable in
             let request = self.alamofireManager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
                 .validate()
-                .response() { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
+                .response { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
 
                     switch (data, error) {
                     case (_, .some(let e)):
@@ -73,5 +70,4 @@ class Network: Networking {
             }
         }
     }
-    
 }
