@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20EF687798C138055EFEB480 /* Pods_Cookbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7579946FDCAE8FACB43A484 /* Pods_Cookbook.framework */; };
+		9056158F1FB5942600353B13 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9056158E1FB5942600353B13 /* Recipe.swift */; };
 		B4B815031E27831800C8A24B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B815021E27831800C8A24B /* AppDelegate.swift */; };
 		B4B815051E27831800C8A24B /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B815041E27831800C8A24B /* MasterViewController.swift */; };
 		B4B815071E27831800C8A24B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B815061E27831800C8A24B /* DetailViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9056158E1FB5942600353B13 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		A7579946FDCAE8FACB43A484 /* Pods_Cookbook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cookbook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B814FF1E27831800C8A24B /* Cookbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B815021E27831800C8A24B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9056158D1FB5941100353B13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9056158E1FB5942600353B13 /* Recipe.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		B4B814F61E27831800C8A24B = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +88,7 @@
 		B4B815011E27831800C8A24B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9056158D1FB5941100353B13 /* Model */,
 				B4B815161E2785B900C8A24B /* Networking */,
 				B4B815021E27831800C8A24B /* AppDelegate.swift */,
 				B4B815041E27831800C8A24B /* MasterViewController.swift */,
@@ -140,7 +151,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Dominik Vesely";
 				TargetAttributes = {
 					B4B814FE1E27831800C8A24B = {
@@ -190,19 +201,25 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Cookbook/Pods-Cookbook-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Argo/Argo.framework",
+				"${BUILT_PRODUCTS_DIR}/Curry/Curry.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reqres/Reqres.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/Runes/Runes.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Argo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Curry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reqres.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Runes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +283,7 @@
 			files = (
 				B4B8151A1E2785D700C8A24B /* Network.swift in Sources */,
 				B4B815071E27831800C8A24B /* DetailViewController.swift in Sources */,
+				9056158F1FB5942600353B13 /* Recipe.swift in Sources */,
 				B4B815051E27831800C8A24B /* MasterViewController.swift in Sources */,
 				B4B8151C1E27AE9400C8A24B /* CookbookAPIService.swift in Sources */,
 				B4B815191E2785D700C8A24B /* APIService.swift in Sources */,
@@ -304,7 +322,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -312,7 +332,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -354,7 +378,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -362,7 +388,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

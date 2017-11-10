@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveSwift
+import Argo
 
 protocol CookbookAPIServicing {
     func getRecipes() -> SignalProducer<Any?, RequestError>
@@ -25,6 +26,10 @@ class CookbookAPIService: APIService, CookbookAPIServicing {
 
     internal func getRecipes() -> SignalProducer<Any?, RequestError> {
         return self.request("recipes")
+            .map { anyJSON -> [Recipe]? in
+                guard let anyJSON = anyJSON else { return nil }
+                return decode(anyJSON)
+            }
             .mapError { .network($0) }
            // .map{ Any? -> Array Of Recipes}
     }

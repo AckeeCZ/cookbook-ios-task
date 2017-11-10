@@ -15,7 +15,8 @@ pod 'SnapKit', '~> 3.0'
 pod 'Alamofire', '~> 4.0'
 pod 'Reqres'
 pod 'SwiftLint'
-
+pod 'Argo'
+pod 'Curry'
 end
 
 post_install do |installer|
@@ -28,6 +29,13 @@ post_install do |installer|
         }.each { |value, configs|
             target.set_build_setting('CODE_SIGN_IDENTITY[sdk=iphoneos*]', value, configs)
         }
+        # set Swift 3.2 for certain projects
+        if target.name == 'SnapKit' || target.name == 'ReactiveSwift' || target.name == 'ReactiveCocoa'
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '3.2'
+                puts "Changing version to 3.2 for target: #{target.name}, configuration: #{config}"
+            end
+        end
     }
 
     puts 'changing bundle versions to conform to testfligh rules'
