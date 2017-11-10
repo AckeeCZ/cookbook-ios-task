@@ -33,7 +33,7 @@ post_install do |installer|
         if target.name == 'SnapKit' || target.name == 'ReactiveSwift' || target.name == 'ReactiveCocoa'
             target.build_configurations.each do |config|
                 config.build_settings['SWIFT_VERSION'] = '3.2'
-                puts "Changing version to 3.2 for target: #{target.name}, configuration: #{config}"
+                puts "Changing Swift version to 3.2 for target: #{target.name}, configuration: #{config}"
             end
         end
     }
