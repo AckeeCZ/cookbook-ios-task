@@ -19,6 +19,7 @@ typealias AuthHandler = Action<NetworkError, (), NSError>
 enum RequestError: Error {
     case network(NetworkError)
     case mapping()
+    case interrupted
 }
 
 class APIService {
