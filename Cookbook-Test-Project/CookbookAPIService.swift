@@ -31,6 +31,5 @@ class CookbookAPIService: APIService, CookbookAPIServicing {
                 return decode(anyJSON)
             }
             .mapError { .network($0) }
-           // .map{ Any? -> Array Of Recipes}
     }
 }
