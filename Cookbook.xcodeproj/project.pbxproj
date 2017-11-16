@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20EF687798C138055EFEB480 /* Pods_Cookbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7579946FDCAE8FACB43A484 /* Pods_Cookbook.framework */; };
+		84EA456D1FB9936E005527E8 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA456C1FB9936E005527E8 /* RecipeTableViewCell.swift */; };
 		9056158F1FB5942600353B13 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9056158E1FB5942600353B13 /* Recipe.swift */; };
 		B4B815031E27831800C8A24B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B815021E27831800C8A24B /* AppDelegate.swift */; };
 		B4B815051E27831800C8A24B /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B815041E27831800C8A24B /* MasterViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84EA456C1FB9936E005527E8 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
 		9056158E1FB5942600353B13 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		A7579946FDCAE8FACB43A484 /* Pods_Cookbook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cookbook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B814FF1E27831800C8A24B /* Cookbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 				B4B815161E2785B900C8A24B /* Networking */,
 				B4B815021E27831800C8A24B /* AppDelegate.swift */,
 				B4B815041E27831800C8A24B /* MasterViewController.swift */,
+				84EA456C1FB9936E005527E8 /* RecipeTableViewCell.swift */,
 				B4B815061E27831800C8A24B /* DetailViewController.swift */,
 				B4B815081E27831800C8A24B /* Main.storyboard */,
 				B4B8150B1E27831800C8A24B /* Assets.xcassets */,
@@ -288,6 +291,7 @@
 				B4B8151C1E27AE9400C8A24B /* CookbookAPIService.swift in Sources */,
 				B4B815191E2785D700C8A24B /* APIService.swift in Sources */,
 				B4B815031E27831800C8A24B /* AppDelegate.swift in Sources */,
+				84EA456D1FB9936E005527E8 /* RecipeTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
