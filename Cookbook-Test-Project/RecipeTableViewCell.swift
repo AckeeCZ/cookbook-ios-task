@@ -22,26 +22,30 @@ class RecipeTableViewCell: UITableViewCell {
     weak var recipeTimeTextView: UITextView!
 
     let stars: [UIImageView] = {
-        [UIImageView(image: #imageLiteral(resourceName: "ic_star")), UIImageView(image: #imageLiteral(resourceName: "ic_star")), UIImageView(image: #imageLiteral(resourceName: "ic_star")), UIImageView(image: #imageLiteral(resourceName: "ic_star")), UIImageView(image: #imageLiteral(resourceName: "ic_star"))]
+        [UIImageView(image: #imageLiteral(resourceName: "ic_star")),
+         UIImageView(image: #imageLiteral(resourceName: "ic_star")),
+         UIImageView(image: #imageLiteral(resourceName: "ic_star")),
+         UIImageView(image: #imageLiteral(resourceName: "ic_star")),
+         UIImageView(image: #imageLiteral(resourceName: "ic_star"))]
     }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         let recipeImage = UIImageView(image: #imageLiteral(resourceName: "img_small"))
-        self.contentView.addSubview(recipeImage)
+        contentView.addSubview(recipeImage)
         self.recipeImage = recipeImage
 
         let recipeNameTextView = UITextView()
-        self.contentView.addSubview(recipeNameTextView)
+        contentView.addSubview(recipeNameTextView)
         self.recipeNameTextView = recipeNameTextView
 
         let timerImage = UIImageView(image: #imageLiteral(resourceName: "ic_time"))
-        self.contentView.addSubview(timerImage)
+        contentView.addSubview(timerImage)
         self.timerImage = timerImage
 
         let recipeTimeTextView = UITextView()
-        self.contentView.addSubview(recipeTimeTextView)
+        contentView.addSubview(recipeTimeTextView)
         self.recipeTimeTextView = recipeTimeTextView
 
         updateTheme()
