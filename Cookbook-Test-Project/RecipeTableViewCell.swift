@@ -52,30 +52,37 @@ class RecipeTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
+    func updateCell(with recipe: Recipe) {
+        recipeNameTextView.text = recipe.name
+        recipeTimeTextView.text = "\(recipe.duration) min."
+        let ratingRounded = Int(floor(recipe.score))
+        stars.enumerated().forEach { (index, imageView) in
+            if index > ratingRounded {
+                imageView.isHidden = true
+            } else {
+                return
+            }
+        }
+    }
+
     func updateTheme() {
-        recipeNameTextView.text = "Chicken with Mole Sauce and Rice"
         recipeNameTextView.textColor = .blue
         recipeNameTextView.font = UIFont.boldSystemFont(ofSize: 22)
-
-        recipeTimeTextView.text = "60 min."
         recipeTimeTextView.font = UIFont.systemFont(ofSize: 14)
     }
 
     func setupCellUI() {
-
         recipeImage.contentMode = .scaleAspectFit
         recipeImage.snp.remakeConstraints { make in
             make.top.leading.equalTo(contentView).offset(8)
             make.width.height.equalTo(120)
         }
-
         recipeNameTextView.snp.remakeConstraints { make in
             make.trailing.equalTo(contentView).offset(8)
             make.top.equalTo(recipeImage)
             make.left.equalTo(recipeImage.snp.right).offset(8)
             make.height.equalTo(58)
         }
-
         let starsStackView = UIStackView(arrangedSubviews: stars)
         self.contentView.addSubview(starsStackView)
         for star in stars {
@@ -86,20 +93,17 @@ class RecipeTableViewCell: UITableViewCell {
             make.top.equalTo(recipeNameTextView.snp.bottom).offset(4)
             make.height.equalTo(25)
         }
-
         timerImage.snp.remakeConstraints { make in
             make.left.equalTo(recipeImage.snp.right).offset(14)
             make.bottom.equalTo(starsStackView).offset(24)
             make.height.width.equalTo(18)
         }
-
         recipeTimeTextView.snp.remakeConstraints { make in
             make.left.equalTo(timerImage.snp.right).offset(8)
             make.centerY.equalTo(timerImage).offset(-3)
             make.trailing.equalTo(contentView).offset(8)
             make.height.equalTo(25)
         }
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
