@@ -19,6 +19,7 @@ typealias AuthHandler = Action<NetworkError, (), NSError>
 enum RequestError: Error {
     case network(NetworkError)
     case mapping()
+    case interrupted
 }
 
 class APIService {
@@ -37,25 +38,41 @@ class APIService {
         return relativeURL
     }
 
-    func request(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String] = [:], authHandler: AuthHandler? = nil) -> SignalProducer<Any?, NetworkError> {
+    func request(_ path: String,
+                 method: Alamofire.HTTPMethod = .get,
+                 parameters: [String: Any]? = nil,
+                 encoding: ParameterEncoding = URLEncoding.default,
+                 headers: [String: String] = [:],
+                 authHandler: AuthHandler? = nil) -> SignalProducer<Any?, NetworkError> {
         let relativeURL = resourceURL(path)
-        return self.network.request(relativeURL.absoluteString, method: method, parameters: parameters, encoding: encoding, headers: headers, useDisposables: false)
+        return self.network.request(relativeURL.absoluteString,
+                                    method: method,
+                                    parameters: parameters,
+                                    encoding: encoding,
+                                    headers: headers,
+                                    useDisposables: false)
             .flatMapError { [unowned self] networkError in
                 guard networkError.response?.statusCode == 401,
                     let authHandler = authHandler,
                     let originalRequest = networkError.request
                 else { return SignalProducer(error: networkError) }
-                
+
                 let retry = { [unowned self] in
-                    self.request(path, method: method, parameters: parameters, encoding: encoding, headers: headers, authHandler: authHandler)
+                    self.request(path,
+                                 method: method,
+                                 parameters: parameters,
+                                 encoding: encoding,
+                                 headers: headers,
+                                 authHandler: authHandler)
                 }
 
-                guard self.requestUsedCurrentAuthData(originalRequest) else { return retry() } // check that we havent refreshed token while the request was running
+                // check that we havent refreshed token while the request was running
+                guard self.requestUsedCurrentAuthData(originalRequest) else { return retry() }
 
-                let refreshSuccessful = SignalProducer(signal: authHandler.events)
+                let refreshSuccessful = SignalProducer(authHandler.events)
                     .filter { $0.isTerminating } // dont care about values
-                .map { e -> Bool in
-                    switch e {
+                .map { event -> Bool in
+                    switch event {
                     case .completed: return true
                     case .failed, .interrupted: return false
                     default: assertionFailure(); return false
@@ -65,7 +82,9 @@ class APIService {
 
                 return refreshSuccessful
                     .on(started: {
-                        DispatchQueue.main.async { // fire the authHandler in next runloop to prevent recursive events in case that authHandler completes synchronously
+                        // fire the authHandler in next runloop to prevent recursive events
+                        // in case that authHandler completes synchronously
+                        DispatchQueue.main.async {
                             authHandler.apply(networkError).start() // sideeffect
                         }
                 })
@@ -76,7 +95,6 @@ class APIService {
                 }
         }
     }
-    
 
     func requestUsedCurrentAuthData(_ request: URLRequest) -> Bool {
         return true

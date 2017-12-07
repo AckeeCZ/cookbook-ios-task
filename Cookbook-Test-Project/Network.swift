@@ -11,34 +11,49 @@ import Alamofire
 import ReactiveSwift
 import Reqres
 
-
 struct NetworkError: Error {
     let error: NSError
     let request: URLRequest?
     let response: HTTPURLResponse?
 }
 
-
-
 protocol Networking {
-    func request(_ url: String, method: Alamofire.HTTPMethod, parameters: [String: Any]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any?, NetworkError>
+    func request(_ url: String,
+                 method: Alamofire.HTTPMethod,
+                 parameters: [String: Any]?,
+                 encoding: ParameterEncoding,
+                 headers: [String: String]?,
+                 useDisposables: Bool) -> SignalProducer<Any?, NetworkError>
 }
 
 class Network: Networking {
-    
-    let alamofireManager : SessionManager
-    
+
+    let alamofireManager: SessionManager
+
     init() {
         let configuration = Reqres.defaultSessionConfiguration()
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         alamofireManager =  Alamofire.SessionManager(configuration: configuration)
     }
 
-    func request(_ url: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]?, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any?, NetworkError> {
+    func request(_ url: String,
+                 method: Alamofire.HTTPMethod = .get,
+                 parameters: [String: Any]?,
+                 encoding: ParameterEncoding = URLEncoding.default,
+                 headers: [String: String]?,
+                 useDisposables: Bool) -> SignalProducer<Any?, NetworkError> {
         return SignalProducer { sink, disposable in
-            let request = self.alamofireManager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let request = self.alamofireManager.request(url,
+                                                        method: method,
+                                                        parameters: parameters,
+                                                        encoding: encoding,
+                                                        headers: headers)
                 .validate()
-                .response() { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
+                .response { defaultResponse in
+                    let request = defaultResponse.request
+                    let response = defaultResponse.response
+                    let data = defaultResponse.data
+                    let error = defaultResponse.error
 
                     switch (data, error) {
                     case (_, .some(let e)):
@@ -49,7 +64,10 @@ class Network: Networking {
                             sink.send(value: json)
                             sink.sendCompleted()
                         } catch {
-                            sink.send(error: NetworkError(error: (error as NSError), request: request, response: response))
+                            let networkError = NetworkError(error: (error as NSError),
+                                                            request: request,
+                                                            response: response)
+                            sink.send(error: networkError)
                             return
                         }
                     default: assertionFailure()
@@ -63,5 +81,4 @@ class Network: Networking {
             }
         }
     }
-    
 }

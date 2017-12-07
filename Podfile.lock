@@ -1,28 +1,40 @@
 PODS:
-  - Alamofire (4.2.0)
-  - ReactiveCocoa (5.0.0-alpha.2):
-    - ReactiveSwift (~> 1.0.0-alpha.3)
-  - ReactiveSwift (1.0.0-alpha.3):
-    - Result (~> 3.0)
-  - Reqres (2.0.0)
-  - Result (3.1.0)
-  - SnapKit (3.0.2)
+  - Alamofire (4.6.0)
+  - Argo (4.1.2):
+    - Runes (>= 4.0.0)
+  - Curry (3.0.0)
+  - ReactiveCocoa (5.0.4):
+    - ReactiveSwift (~> 1.1)
+  - ReactiveSwift (1.1.5):
+    - Result (~> 3.2)
+  - Reqres (2.1.0)
+  - Result (3.2.4)
+  - Runes (4.1.0)
+  - SnapKit (3.2.0)
+  - SwiftLint (0.24.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
-  - ReactiveCocoa (= 5.0.0-alpha.2)
-  - ReactiveSwift (= 1.0.0-alpha.3)
+  - Argo
+  - Curry
+  - ReactiveCocoa (~> 5)
+  - ReactiveSwift (~> 1)
   - Reqres
   - SnapKit (~> 3.0)
+  - SwiftLint
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  ReactiveCocoa: 14a6358d1009c90c3078bc352ce84c102b78c45e
-  ReactiveSwift: d67b677f9574ba614d94022a88fcf456e77fa515
-  Reqres: 7027a575c1539c9635ff11ecf04d49cdf30a2f0a
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
-  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Argo: 5db06502fc1222d83011f574243089dab25202ff
+  Curry: eb3d2c75aec678b3cc7fb2729d2ad6dd121531d1
+  ReactiveCocoa: b31e754d15937811ede648fc83cd68f5de70a3d4
+  ReactiveSwift: 3fea31f8fc49f112d2dc613282c5d395c4d167bb
+  Reqres: 98a22e7b0772d423fabda44bfed533f197bc4856
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Runes: 72a67a5bbbe1b5fdae08b5a01b10c60d83fc69aa
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: f591f29a17f1467b6c48a464f132bbbccb4c0164
+PODFILE CHECKSUM: 50b0337d5a1fd27886ee1037d3b56e42f7c3c6f2
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

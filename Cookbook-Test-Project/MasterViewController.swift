@@ -10,8 +10,9 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
-    var detailViewController: DetailViewController? = nil
+    var detailViewController: DetailViewController?
     var objects = [Any]()
+    let cellIdentifier = "RecipeCell"
 
     var api: CookbookAPIServicing!
 
@@ -19,26 +20,28 @@ class MasterViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
+        tableView.register(RecipeTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.rowHeight = UITableViewAutomaticDimension
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            let lastNavController = split.viewControllers.last as? UINavigationController
+            self.detailViewController = lastNavController?.topViewController as? DetailViewController
+
         }
-        
+
         //Just quick snippet for showing how to work with api service
         self.api = CookbookAPIService(network: Network(), authHandler: nil)
         api.getRecipes().startWithResult { (result) in
             if case .success(let value) = result {
                 print (value ?? "")
             }
-            
+
             if case .failure(let error) = result {
                 print(error)
             }
         }
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +54,7 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(_ sender: Any) {
+    @objc func insertNewObject(_ sender: Any) {
         objects.insert(NSDate(), at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
@@ -62,11 +65,12 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
+                let object = objects[indexPath.row] as? NSDate
+                let destinationNavController = segue.destination as? UINavigationController
+                let controller = destinationNavController?.topViewController as? DetailViewController
+                controller?.detailItem = object
+                controller?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                controller?.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
@@ -82,10 +86,12 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        // swiftlint:disable:next force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RecipeTableViewCell
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+//        let object = objects[indexPath.row] as? NSDate
+//        cell.textLabel!.text = object?.description
+
         return cell
     }
 
@@ -94,15 +100,15 @@ class MasterViewController: UITableViewController {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             objects.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+            // Create a new instance of the appropriate class, insert it into the array,
+            // and add a new row to the table view.
         }
     }
-
-
 }
-
