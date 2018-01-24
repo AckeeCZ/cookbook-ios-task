@@ -57,7 +57,7 @@ class Network: Networking {
             }
 
             if useDisposables {
-                disposable.add { // if disposed cancel running request
+                disposable.observeEnded {
                     request.cancel()
                 }
             }

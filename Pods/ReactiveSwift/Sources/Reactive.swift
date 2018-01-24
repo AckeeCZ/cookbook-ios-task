@@ -11,16 +11,22 @@ extension ReactiveExtensionsProvider {
 	public var reactive: Reactive<Self> {
 		return Reactive(self)
 	}
+
+	/// A proxy which hosts static reactive extensions for the type of `self`.
+	public static var reactive: Reactive<Self>.Type {
+		return Reactive<Self>.self
+	}
 }
 
-// A `Reactive` proxy hosts reactive extensions to `Base`.
+/// A proxy which hosts reactive extensions of `Base`.
 public struct Reactive<Base> {
+	/// The `Base` instance the extensions would be invoked with.
 	public let base: Base
 
-	// Construct a proxy.
-	//
-	// - parameters:
-	//   - base: The object to be proxied.
+	/// Construct a proxy
+	///
+	/// - parameters:
+	///   - base: The object to be proxied.
 	fileprivate init(_ base: Base) {
 		self.base = base
 	}

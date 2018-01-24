@@ -6,41 +6,36 @@
 //  Copyright (c) 2014 GitHub. All rights reserved.
 //
 
-/// A uniquely identifying token for removing a value that was inserted into a
-/// Bag.
-public final class RemovalToken {
-	fileprivate var identifier: UInt?
-
-	fileprivate init(identifier: UInt) {
-		self.identifier = identifier
-	}
-}
-
 /// An unordered, non-unique collection of values of type `Element`.
 public struct Bag<Element> {
-	fileprivate var elements: [BagElement<Element>] = []
-	private var currentIdentifier: UInt = 0
-
-	public init() {
+	/// A uniquely identifying token for removing a value that was inserted into a
+	/// Bag.
+	public struct Token {
+		fileprivate let value: UInt64
 	}
 
+	fileprivate var elements: ContiguousArray<Element> = []
+	fileprivate var tokens: ContiguousArray<UInt64> = []
+
+	private var nextToken: Token = Token(value: 0)
+
+	public init() {}
+
 	/// Insert the given value into `self`, and return a token that can
-	/// later be passed to `removeValueForToken()`.
+	/// later be passed to `remove(using:)`.
 	///
 	/// - parameters:
 	///   - value: A value that will be inserted.
 	@discardableResult
-	public mutating func insert(_ value: Element) -> RemovalToken {
-		let (nextIdentifier, overflow) = UInt.addWithOverflow(currentIdentifier, 1)
-		if overflow {
-			reindex()
-		}
+	public mutating func insert(_ value: Element) -> Token {
+		let token = nextToken
 
-		let token = RemovalToken(identifier: currentIdentifier)
-		let element = BagElement(value: value, identifier: currentIdentifier, token: token)
+		// Practically speaking, this would overflow only if we have 101% uptime and we
+		// manage to call `insert(_:)` every 1 ns for 500+ years non-stop.
+		nextToken = Token(value: token.value + 1)
 
-		elements.append(element)
-		currentIdentifier = nextIdentifier
+		elements.append(value)
+		tokens.append(token.value)
 
 		return token
 	}
@@ -51,60 +46,57 @@ public struct Bag<Element> {
 	///
 	/// - parameters:
 	///   - token: A token returned from a call to `insert()`.
-	public mutating func remove(using token: RemovalToken) {
-		if let identifier = token.identifier {
-			// Removal is more likely for recent objects than old ones.
-			for i in elements.indices.reversed() {
-				if elements[i].identifier == identifier {
-					elements.remove(at: i)
-					token.identifier = nil
-					break
-				}
+	@discardableResult
+	public mutating func remove(using token: Token) -> Element? {
+		for i in elements.indices.reversed() {
+			if tokens[i] == token.value {
+				tokens.remove(at: i)
+				return elements.remove(at: i)
 			}
 		}
-	}
 
-	/// In the event of an identifier overflow (highly, highly unlikely), reset
-	/// all current identifiers to reclaim a contiguous set of available
-	/// identifiers for the future.
-	private mutating func reindex() {
-		for i in elements.indices {
-			currentIdentifier = UInt(i)
-
-			elements[i].identifier = currentIdentifier
-			elements[i].token.identifier = currentIdentifier
-		}
+		return nil
 	}
 }
 
-extension Bag: Collection {
-	public typealias Index = Array<Element>.Index
-
-	public var startIndex: Index {
+extension Bag: RandomAccessCollection {
+	public var startIndex: Int {
 		return elements.startIndex
 	}
-	
-	public var endIndex: Index {
+
+	public var endIndex: Int {
 		return elements.endIndex
 	}
 
-	public subscript(index: Index) -> Element {
-		return elements[index].value
+	public subscript(index: Int) -> Element {
+		return elements[index]
 	}
 
-	public func index(after i: Index) -> Index {
-		return i + 1
+	public func makeIterator() -> Iterator {
+		return Iterator(elements)
 	}
-}
 
-private struct BagElement<Value> {
-	let value: Value
-	var identifier: UInt
-	let token: RemovalToken
-}
+	/// An iterator of `Bag`.
+	public struct Iterator: IteratorProtocol {
+		private let base: ContiguousArray<Element>
+		private var nextIndex: Int
+		private let endIndex: Int
 
-extension BagElement: CustomStringConvertible {
-	var description: String {
-		return "BagElement(\(value))"
+		fileprivate init(_ base: ContiguousArray<Element>) {
+			self.base = base
+			nextIndex = base.startIndex
+			endIndex = base.endIndex
+		}
+
+		public mutating func next() -> Element? {
+			let currentIndex = nextIndex
+
+			if currentIndex < endIndex {
+				nextIndex = currentIndex + 1
+				return base[currentIndex]
+			}
+
+			return nil
+		}
 	}
 }

@@ -16,4 +16,14 @@ extension Reactive where Base: UIView {
 	public var isUserInteractionEnabled: BindingTarget<Bool> {
 		return makeBindingTarget { $0.isUserInteractionEnabled = $1 }
 	}
+
+	/// Sets the background color of the view.
+	public var backgroundColor: BindingTarget<UIColor> {
+		return makeBindingTarget { $0.backgroundColor = $1 }
+	}
+	
+	/// Sets the tintColor of the view
+	public var tintColor: BindingTarget<UIColor> {
+		return makeBindingTarget { $0.tintColor = $1 }
+	}
 }

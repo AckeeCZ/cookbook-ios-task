@@ -11,17 +11,112 @@ extension Reactive where Base: NSObject {
 	/// - parameters:
 	///   - keyPath: The key path of the property to be observed.
 	///
-	/// - returns:
-	///   A producer emitting values of the property specified by the key path.
-	public func values(forKeyPath keyPath: String) -> SignalProducer<Any?, NoError> {
-		return SignalProducer { observer, disposable in
-			disposable += KeyValueObserver.observe(
+	/// - returns: A producer emitting values of the property specified by the
+	///            key path.
+	public func producer(forKeyPath keyPath: String) -> SignalProducer<Any?, NoError> {
+		return SignalProducer { observer, lifetime in
+			let disposable = KeyValueObserver.observe(
 				self.base,
 				keyPath: keyPath,
 				options: [.initial, .new],
 				action: observer.send
 			)
-			disposable += self.lifetime.ended.observeCompleted(observer.sendCompleted)
+
+			lifetime.observeEnded(disposable.dispose)
+
+			if let lifetimeDisposable = self.lifetime.observeEnded(observer.sendCompleted) {
+				lifetime.observeEnded(lifetimeDisposable.dispose)
+			}
+		}
+	}
+
+	/// Create a signal all changes of the property specified by the key path.
+	///
+	/// The signal completes when the object deinitializes.
+	///
+	/// - note:
+	///	  Does not send the initial value. See `producer(forKeyPath:)`.
+	///
+	/// - parameters:
+	///   - keyPath: The key path of the property to be observed.
+	///
+	/// - returns: A producer emitting values of the property specified by the 
+	///            key path.
+	public func signal(forKeyPath keyPath: String) -> Signal<Any?, NoError> {
+		return Signal { observer, signalLifetime in
+			signalLifetime += KeyValueObserver.observe(
+				self.base,
+				keyPath: keyPath,
+				options: [.new],
+				action: observer.send
+			)
+			signalLifetime += lifetime.observeEnded(observer.sendCompleted)
+		}
+	}
+}
+
+extension Property where Value: OptionalProtocol {
+	/// Create a property that observes the given key path of the given object. The
+	/// generic type `Value` can be any Swift type that is Objective-C bridgeable.
+	///
+	/// - parameters:
+	///   - object: An object to be observed.
+	///   - keyPath: The key path to observe.
+	public convenience init(object: NSObject, keyPath: String) {
+		// `Property(_:)` caches the latest value of the `DynamicProperty`, so it is
+		// saved to be used even after `object` deinitializes.
+		self.init(UnsafeKVOProperty(object: object, optionalAttributeKeyPath: keyPath))
+	}
+}
+
+extension Property {
+	/// Create a property that observes the given key path of the given object. The
+	/// generic type `Value` can be any Swift type that is Objective-C bridgeable.
+	///
+	/// - parameters:
+	///   - object: An object to be observed.
+	///   - keyPath: The key path to observe.
+	public convenience init(object: NSObject, keyPath: String) {
+		// `Property(_:)` caches the latest value of the `DynamicProperty`, so it is
+		// saved to be used even after `object` deinitializes.
+		self.init(UnsafeKVOProperty(object: object, nonOptionalAttributeKeyPath: keyPath))
+	}
+}
+
+// `Property(unsafeProducer:)` is private to ReactiveSwift. So the fact that
+// `Property(_:)` uses only the producer is explioted here to achieve the same effect.
+private final class UnsafeKVOProperty<Value>: PropertyProtocol {
+	var value: Value { fatalError() }
+	var signal: Signal<Value, NoError> { fatalError() }
+	let producer: SignalProducer<Value, NoError>
+	
+	init(producer: SignalProducer<Value, NoError>) {
+		self.producer = producer
+	}
+	
+	convenience init(object: NSObject, nonOptionalAttributeKeyPath keyPath: String) {
+		self.init(producer: object.reactive.producer(forKeyPath: keyPath).map { $0 as! Value })
+	}
+}
+
+private extension UnsafeKVOProperty where Value: OptionalProtocol {
+	convenience init(object: NSObject, optionalAttributeKeyPath keyPath: String) {
+		self.init(producer: object.reactive.producer(forKeyPath: keyPath).map {
+			return Value(reconstructing: $0.optional as? Value.Wrapped)
+		})
+	}
+}
+
+extension BindingTarget {
+	/// Create a binding target that sets the given key path of the given object. The
+	/// generic type `Value` can be any Swift type that is Objective-C bridgeable.
+	///
+	/// - parameters:
+	///   - object: An object to be observed.
+	///   - keyPath: The key path to set.
+	public init(object: NSObject, keyPath: String) {
+		self.init(lifetime: object.reactive.lifetime) { [weak object] value in
+			object?.setValue(value, forKey: keyPath)
 		}
 	}
 }
@@ -80,14 +175,14 @@ extension KeyValueObserver {
 	///   - options: The desired configuration of the observation.
 	///   - action: The action to be invoked upon arrival of changes.
 	///
-	/// - returns:
-	///   A disposable that would tear down the observation upon disposal.
+	/// - returns: A disposable that would tear down the observation upon 
+	///            disposal.
 	static func observe(
 		_ object: NSObject,
 		keyPath: String,
 		options: NSKeyValueObservingOptions,
 		action: @escaping (_ value: AnyObject?) -> Void
-	) -> ActionDisposable {
+	) -> AnyDisposable {
 		// Compute the key path head and tail.
 		let components = keyPath.components(separatedBy: ".")
 		precondition(!components.isEmpty, "Received an empty key path.")
@@ -110,13 +205,13 @@ extension KeyValueObserver {
 		//
 		// Attempting to observe non-weak properties using dynamic getters will
 		// result in broken behavior, so don't even try.
-		let shouldObserveDeinit = keyPathHead.withCString { cString -> Bool in
+		let (shouldObserveDeinit, isWeak) = keyPathHead.withCString { cString -> (Bool, Bool) in
 			if let propertyPointer = class_getProperty(type(of: object), cString) {
 				let attributes = PropertyAttributes(property: propertyPointer)
-				return attributes.isObject && attributes.isWeak && attributes.objectClass != NSClassFromString("Protocol") && !attributes.isBlock
+				return (attributes.isObject && attributes.objectClass != NSClassFromString("Protocol") && !attributes.isBlock, attributes.isWeak)
 			}
 
-			return false
+			return (false, false)
 		}
 
 		// Establish the observation.
@@ -126,18 +221,23 @@ extension KeyValueObserver {
 		let observer: KeyValueObserver
 
 		if isNested {
-			observer = KeyValueObserver(observing: object, key: keyPathHead, options: options) { object in
+			observer = KeyValueObserver(observing: object, key: keyPathHead, options: options.union(.initial)) { object in
 				guard let value = object?.value(forKey: keyPathHead) as! NSObject? else {
 					action(nil)
 					return
 				}
 
 				let headDisposable = CompositeDisposable()
-				headSerialDisposable.innerDisposable = headDisposable
+				headSerialDisposable.inner = headDisposable
 
 				if shouldObserveDeinit {
-					let disposable = value.reactive.lifetime.ended.observeCompleted {
-						action(nil)
+					let disposable = value.reactive.lifetime.observeEnded {
+						if isWeak {
+							action(nil)
+						}
+
+						// Detach the key path tail observers eagarly.
+						headSerialDisposable.inner = nil
 					}
 					headDisposable += disposable
 				}
@@ -156,16 +256,19 @@ extension KeyValueObserver {
 			}
 		} else {
 			observer = KeyValueObserver(observing: object, key: keyPathHead, options: options) { object in
-				guard let value = object?.value(forKey: keyPathHead) as! NSObject? else {
+				guard let value = object?.value(forKey: keyPathHead) as AnyObject? else {
 					action(nil)
 					return
 				}
 
-				if shouldObserveDeinit {
-					let disposable = value.reactive.lifetime.ended.observeCompleted {
+				// For a direct key path, the deinitialization needs to be
+				// observed only if the key path is a weak property.
+				if shouldObserveDeinit && isWeak {
+					let disposable = lifetime(of: value).observeEnded {
 						action(nil)
 					}
-					headSerialDisposable.innerDisposable = disposable
+
+					headSerialDisposable.inner = disposable
 				}
 
 				// Send the latest value of the key.
@@ -173,7 +276,7 @@ extension KeyValueObserver {
 			}
 		}
 
-		return ActionDisposable {
+		return AnyDisposable {
 			observer.detach()
 			headSerialDisposable.dispose()
 		}
@@ -233,7 +336,7 @@ internal struct PropertyAttributes {
 		let _next = NSGetSizeAndAlignment(typeString, nil, nil)
 		guard _next != typeString else {
 			let string = String(validatingUTF8: attrString)
-			preconditionFailure("Could not read past type in attribute string: \(string).")
+			preconditionFailure("Could not read past type in attribute string: \(String(describing: string)).")
 		}
 		var next = UnsafeMutablePointer<Int8>(mutating: _next)
 
@@ -324,7 +427,7 @@ internal struct PropertyAttributes {
 
 			case Code.Attribute.oldTypeEncoding:
 				let string = String(validatingUTF8: attrString)
-				assertionFailure("Old-style type encoding is unsupported in attribute string \"\(string)\"")
+				assertionFailure("Old-style type encoding is unsupported in attribute string \"\(String(describing: string))\"")
 
 				// skip over this type encoding
 				while next.pointee != Code.comma && next.pointee != Code.nul {
@@ -338,14 +441,14 @@ internal struct PropertyAttributes {
 
 				let flag = String(validatingUTF8: pointer)
 				let string = String(validatingUTF8: attrString)
-				preconditionFailure("ERROR: Unrecognized attribute string flag '\(flag)' in attribute string \"\(string)\".")
+				preconditionFailure("ERROR: Unrecognized attribute string flag '\(String(describing: flag))' in attribute string \"\(String(describing: string))\".")
 			}
 		}
 
 		if next.pointee != Code.nul {
 			let unparsedData = String(validatingUTF8: next)
 			let string = String(validatingUTF8: attrString)
-			assertionFailure("Warning: Unparsed data \"\(unparsedData)\" in attribute string \"\(string)\".")
+			assertionFailure("Warning: Unparsed data \"\(String(describing: unparsedData))\" in attribute string \"\(String(describing: string))\".")
 		}
 
 		self.objectClass = objectClass
