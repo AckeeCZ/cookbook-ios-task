@@ -1,6 +1,6 @@
 //
 //  CookbookAPIService.swift
-//  Cookbook
+//  Cookbook-Test-Project
 //
 //  Created by Dominik Vesely on 12/01/2017.
 //  Copyright © 2017 Dominik Vesely. All rights reserved.
