@@ -1,6 +1,6 @@
 //
 //  APIService.swift
-//  Bazos
+//  Cookbook-Test-Project
 //
 //  Created by Tomas Kohout on 4/12/16.
 //  Copyright © 2016 Ackee s.r.o. All rights reserved.
