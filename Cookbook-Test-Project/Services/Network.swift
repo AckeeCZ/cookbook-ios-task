@@ -11,14 +11,11 @@ import Alamofire
 import ReactiveSwift
 import Reqres
 
-
 struct NetworkError: Error {
     let error: NSError
     let request: URLRequest?
     let response: HTTPURLResponse?
 }
-
-
 
 protocol Networking {
     func request(_ url: String, method: Alamofire.HTTPMethod, parameters: [String: Any]?, encoding: ParameterEncoding, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any?, NetworkError>
