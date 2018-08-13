@@ -7,7 +7,7 @@ Here is a task for you! Create an iOS version of delicious ackee recipes. We hav
 - Designs
 - Simple iOS skeleton with some prepared code
 
-It should take you around 2-4 hours to complete.
+It should take you around 1 day to complete.
 
 ## API & Server
 Documentation for the api can be found on [apiary][2]
