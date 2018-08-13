@@ -30,7 +30,7 @@
 		B4B815091E27831800C8A24B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4B8150B1E27831800C8A24B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4B8150E1E27831800C8A24B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B4B815101E27831800C8A24B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4B815101E27831800C8A24B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Cookbook-Test-Project/Info.plist"; sourceTree = "<group>"; };
 		B4B815171E2785D700C8A24B /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B4B815181E2785D700C8A24B /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		B4B8151B1E27AE9400C8A24B /* CookbookAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookbookAPIService.swift; sourceTree = "<group>"; };
@@ -68,7 +68,8 @@
 		B4B814F61E27831800C8A24B = {
 			isa = PBXGroup;
 			children = (
-				B4B815011E27831800C8A24B /* Source */,
+				D28696B32121D16C00DA769D /* Cookbook-Test-Project */,
+				B4B815101E27831800C8A24B /* Info.plist */,
 				B4B815001E27831800C8A24B /* Products */,
 				5D411AA0001008D2A71F97CF /* Pods */,
 				01A772BE48019979E87FDA0A /* Frameworks */,
@@ -83,30 +84,68 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B4B815011E27831800C8A24B /* Source */ = {
+		D28696B32121D16C00DA769D /* Cookbook-Test-Project */ = {
 			isa = PBXGroup;
 			children = (
-				B4B815161E2785B900C8A24B /* Networking */,
-				B4B815021E27831800C8A24B /* AppDelegate.swift */,
-				B4B815041E27831800C8A24B /* MasterViewController.swift */,
-				B4B815061E27831800C8A24B /* DetailViewController.swift */,
-				B4B815081E27831800C8A24B /* Main.storyboard */,
-				B4B8150B1E27831800C8A24B /* Assets.xcassets */,
-				B4B8150D1E27831800C8A24B /* LaunchScreen.storyboard */,
-				B4B815101E27831800C8A24B /* Info.plist */,
+				D28696B82121D20100DA769D /* Resources */,
+				D28696B42121D19800DA769D /* AppDelegates */,
+				D28696B62121D1D500DA769D /* Services */,
+				D28696B52121D1A000DA769D /* ViewController */,
 			);
-			name = Source;
 			path = "Cookbook-Test-Project";
 			sourceTree = "<group>";
 		};
-		B4B815161E2785B900C8A24B /* Networking */ = {
+		D28696B42121D19800DA769D /* AppDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				B4B815021E27831800C8A24B /* AppDelegate.swift */,
+			);
+			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		D28696B52121D1A000DA769D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B4B815041E27831800C8A24B /* MasterViewController.swift */,
+				B4B815061E27831800C8A24B /* DetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D28696B62121D1D500DA769D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D28696B92121D38200DA769D /* API */,
+				B4B815181E2785D700C8A24B /* Network.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D28696B82121D20100DA769D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B4B8150B1E27831800C8A24B /* Assets.xcassets */,
+				B4B815081E27831800C8A24B /* Main.storyboard */,
+				B4B8150D1E27831800C8A24B /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D28696B92121D38200DA769D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D28696BA2121D38900DA769D /* Base */,
+				B4B8151B1E27AE9400C8A24B /* CookbookAPIService.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		D28696BA2121D38900DA769D /* Base */ = {
 			isa = PBXGroup;
 			children = (
 				B4B815171E2785D700C8A24B /* APIService.swift */,
-				B4B815181E2785D700C8A24B /* Network.swift */,
-				B4B8151B1E27AE9400C8A24B /* CookbookAPIService.swift */,
 			);
-			name = Networking;
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,7 +160,6 @@
 				B4B814FC1E27831800C8A24B /* Frameworks */,
 				B4B814FD1E27831800C8A24B /* Resources */,
 				9A2DF950422C784D0C96BCA0 /* [CP] Embed Pods Frameworks */,
-				A6A2A6772786FD32B0C2F9F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -139,7 +177,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Dominik Vesely";
 				TargetAttributes = {
 					B4B814FE1E27831800C8A24B = {
@@ -206,21 +244,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cookbook/Pods-Cookbook-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A6A2A6772786FD32B0C2F9F6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cookbook/Pods-Cookbook-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB2A4240368CB1A1E3318BBD /* [CP] Check Pods Manifest.lock */ = {
@@ -292,6 +315,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -299,6 +323,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -348,6 +373,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -355,6 +381,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

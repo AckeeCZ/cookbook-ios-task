@@ -1,7 +1,5 @@
 # Podfile
-source 'https://github.com/CocoaPods/Specs.git' # Default Cocoapods repo
-
-platform :ios, '9.0'
+platform :ios, '10.0'
 project 'Cookbook', 'AdHoc' => :release,'AppStore' => :release, 'Development' => :debug
 
 use_frameworks!
@@ -9,11 +7,11 @@ inhibit_all_warnings!
 
 target 'Cookbook' do
 
-pod 'ReactiveCocoa', '~> 7.1.0'
-pod 'ReactiveSwift', '~> 3.1.0'
-pod 'SnapKit', '~> 4.0'
-pod 'Alamofire', '~> 4.0'
-pod 'Reqres', '~> 2.1.1'
+pod 'ReactiveCocoa', '~> 8.0.0'
+pod 'ReactiveSwift', '~> 4.0.0'
+pod 'SnapKit', '~> 4.0.0'
+pod 'Alamofire', '~> 4.7.3'
+pod 'Reqres', '~> 2.2.0'
 
 end
 
