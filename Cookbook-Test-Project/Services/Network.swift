@@ -33,8 +33,10 @@ class Network: Networking {
     }
 
     func request(_ url: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]?, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any?, NetworkError> {
+        let manager = alamofireManager
+
         return SignalProducer { sink, disposable in
-            let request = self.alamofireManager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let request = manager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
                 .validate()
                 .response() { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
 

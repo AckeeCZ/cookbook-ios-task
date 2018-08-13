@@ -25,7 +25,7 @@ class CookbookAPIService : APIService, CookbookAPIServicing {
     // MARK: CookbookAPIServicing
     
     internal func getRecipes() -> SignalProducer<Any?, RequestError> {
-        return self.request("recipes")
+        return request("recipes")
             .mapError { .network($0) }
            // .map{ Any? -> Array Of Recipes}
     }
