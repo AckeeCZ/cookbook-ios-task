@@ -115,19 +115,10 @@
 		D28696B62121D1D500DA769D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D28696B72121D1E200DA769D /* Network */,
+				D28696B92121D38200DA769D /* API */,
+				B4B815181E2785D700C8A24B /* Network.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		D28696B72121D1E200DA769D /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				B4B815171E2785D700C8A24B /* APIService.swift */,
-				B4B815181E2785D700C8A24B /* Network.swift */,
-				B4B8151B1E27AE9400C8A24B /* CookbookAPIService.swift */,
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 		D28696B82121D20100DA769D /* Resources */ = {
@@ -138,6 +129,23 @@
 				B4B8150D1E27831800C8A24B /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		D28696B92121D38200DA769D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D28696BA2121D38900DA769D /* Base */,
+				B4B8151B1E27AE9400C8A24B /* CookbookAPIService.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		D28696BA2121D38900DA769D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B4B815171E2785D700C8A24B /* APIService.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
