@@ -121,7 +121,6 @@
 				B4B814FC1E27831800C8A24B /* Frameworks */,
 				B4B814FD1E27831800C8A24B /* Resources */,
 				9A2DF950422C784D0C96BCA0 /* [CP] Embed Pods Frameworks */,
-				A6A2A6772786FD32B0C2F9F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,21 +205,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cookbook/Pods-Cookbook-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A6A2A6772786FD32B0C2F9F6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cookbook/Pods-Cookbook-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB2A4240368CB1A1E3318BBD /* [CP] Check Pods Manifest.lock */ = {

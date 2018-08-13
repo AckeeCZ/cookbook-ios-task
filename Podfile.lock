@@ -1,28 +1,37 @@
 PODS:
-  - Alamofire (4.6.0)
-  - ReactiveCocoa (7.1.0):
-    - ReactiveSwift (~> 3.1)
-  - ReactiveSwift (3.1.0):
-    - Result (~> 3.2)
-  - Reqres (2.1.1)
-  - Result (3.2.4)
+  - Alamofire (4.7.3)
+  - ReactiveCocoa (8.0.0):
+    - ReactiveSwift (~> 4.0)
+  - ReactiveSwift (4.0.0):
+    - Result (~> 4.0)
+  - Reqres (2.2.0)
+  - Result (4.0.0)
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
-  - ReactiveCocoa (~> 7.1.0)
-  - ReactiveSwift (~> 3.1.0)
-  - Reqres (~> 2.1.1)
-  - SnapKit (~> 4.0)
+  - Alamofire (~> 4.7.3)
+  - ReactiveCocoa (~> 8.0.0)
+  - ReactiveSwift (~> 4.0.0)
+  - Reqres (~> 2.2.0)
+  - SnapKit (~> 4.0.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - ReactiveCocoa
+    - ReactiveSwift
+    - Reqres
+    - Result
+    - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  ReactiveCocoa: 105ad96f6b8711f1ee7d165fc96587479298053b
-  ReactiveSwift: 5b26d2e988fe0eed2daf48c4054d1de74db50184
-  Reqres: d532d6fddbede6d688552a7f2535fb0102fc4aca
-  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  ReactiveCocoa: 87cb64d78424d749a0bbfd9b07e4825e8d834066
+  ReactiveSwift: a2bb9ace428a109e9c0209615645d9d286c8c433
+  Reqres: 51c7e2089f0012d79dda6363a0259fa585a33ff9
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 7c09179d2bc38764392a7c002f5bf85c7255667f
+PODFILE CHECKSUM: 1f71a11483a61a698a23a0e1a5b0d264f8054b43
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3
