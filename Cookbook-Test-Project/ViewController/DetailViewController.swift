@@ -9,18 +9,18 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    // MARK: Properties
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-
-    func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.description
-            }
+    var detailItem: Date? {
+        didSet {
+            // Update the view.
+            self.configureView()
         }
     }
+
+    // MARK: Controller lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,18 +28,14 @@ class DetailViewController: UIViewController {
         self.configureView()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    // MARK: Private API
 
-    var detailItem: NSDate? {
-        didSet {
-            // Update the view.
-            self.configureView()
+    private func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = self.detailItem {
+            if let label = self.detailDescriptionLabel {
+                label.text = detail.description
+            }
         }
     }
-
-
 }
-

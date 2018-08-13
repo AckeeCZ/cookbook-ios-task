@@ -27,6 +27,7 @@ class Network: Networking {
     
     init() {
         let configuration = Reqres.defaultSessionConfiguration()
+
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         alamofireManager =  Alamofire.SessionManager(configuration: configuration)
     }
@@ -60,5 +61,4 @@ class Network: Networking {
             }
         }
     }
-    
 }
