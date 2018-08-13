@@ -18,7 +18,7 @@ class CookbookAPIService : APIService, CookbookAPIServicing {
 
     private static let baseURL = URL(string: "https://cookbook.ack.ee/api/v1/")!
     
-    override func resourceURL(_ path: String) -> URL {
+    override func resourceURL(for path: String) -> URL {
         return CookbookAPIService.baseURL.appendingPathComponent(path)
     }
 
