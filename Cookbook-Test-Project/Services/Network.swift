@@ -22,21 +22,18 @@ protocol Networking {
 }
 
 class Network: Networking {
-    
-    let alamofireManager : SessionManager
+    private let alamofireManager: Alamofire.Session
     
     init() {
         let configuration = Reqres.defaultSessionConfiguration()
-
-        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        alamofireManager =  Alamofire.SessionManager(configuration: configuration)
+        alamofireManager = Alamofire.Session(configuration: configuration)
     }
 
     func request(_ url: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any]?, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]?, useDisposables: Bool) -> SignalProducer<Any?, NetworkError> {
         let manager = alamofireManager
 
         return SignalProducer { sink, disposable in
-            let request = manager.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let request = manager.request(url, method: method, parameters: parameters, encoding: encoding, headers: HTTPHeaders(headers ?? [:]))
                 .validate()
                 .response() { let request = $0.request; let response = $0.response; let data = $0.data; let error = $0.error
 
