@@ -7,11 +7,10 @@ PODS:
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
-  - Alamofire
-  - ReactiveCocoa
-  - ReactiveSwift
-  - Reqres
-  - SnapKit
+  - Alamofire (~> 5.2)
+  - ReactiveCocoa (~> 11.0)
+  - Reqres (~> 3.1)
+  - SnapKit (~> 5.0)
 
 SPEC REPOS:
   trunk:
@@ -28,6 +27,6 @@ SPEC CHECKSUMS:
   Reqres: 4ebafc15b75c65fdf67edcec14520d43b836d4da
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 108dec69733ca0cda10f6d49afa98457492b82f5
+PODFILE CHECKSUM: 58bcee52e9123373c3df9f6a8e4a5f446e109707
 
 COCOAPODS: 1.9.3

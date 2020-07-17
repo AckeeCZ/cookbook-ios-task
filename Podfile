@@ -7,9 +7,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'Cookbook' do
-    pod 'ReactiveCocoa'
-    pod 'ReactiveSwift'
-    pod 'SnapKit'
-    pod 'Alamofire'
-    pod 'Reqres'
+    pod 'ReactiveCocoa', '~> 11.0'
+    pod 'SnapKit', '~> 5.0'
+    pod 'Alamofire', '~> 5.2'
+    pod 'Reqres', '~> 3.1'
 end
