@@ -9,11 +9,10 @@
 import Foundation
 import Alamofire
 import ReactiveSwift
-import Result
 
 enum RequestError: Error {
     case network(NetworkError)
-    case mapping()
+    case mapping
 }
 
 /// Base class which all API Services should inherit
